@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Actors\Gateway\Messages\**" />
+    <Content Remove="Actors\Gateway\Messages\**" />
+    <EmbeddedResource Remove="Actors\Gateway\Messages\**" />
+    <None Remove="Actors\Gateway\Messages\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Akka" Version="1.3.14" />
+    <PackageReference Include="Akka.Bootstrap.Docker" Version="0.2.1" />
+    <PackageReference Include="Akka.Cluster" Version="1.3.14" />
+    <PackageReference Include="Akka.Cluster.Tools" Version="1.3.14" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Serilog" Version="2.8.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Services.Gateway.Shared\Services.Gateway.Shared.csproj" />
+    <ProjectReference Include="..\Services.Product.Shared\Services.Product.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="service.gateway.hocon">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,13 @@
+﻿akka {
+    actor.provider = cluster
+    remote {
+        dot-netty.tcp {
+            port = 0 #let os pick random port
+            hostname = localhost
+        }
+    }
+    cluster {
+        seed-nodes = ["akka.tcp://pricingsystem@localhost:8081"]
+		roles = [pricing]
+    }
+}

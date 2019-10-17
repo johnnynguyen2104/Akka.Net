@@ -1,0 +1,30 @@
+﻿akka {
+	actor {
+		provider = cluster
+		deployment {
+            
+			/broker/broadcaster {
+				router = broadcast-group
+				routees.paths = ["/user/broker"]
+				cluster {
+					enabled = on
+					allow-local-routees = on
+					use-role = pricing
+				}
+			}
+		}
+	}
+						
+	remote {
+		dot-netty.tcp {
+				hostname = localhost
+				port = 0
+			}
+	}			
+
+	cluster {
+		#will inject this node as a self-seed node at run-time
+		seed-nodes = ["akka.tcp://pricingsystem@localhost:8081"] #manually populate other seed nodes here, i.e. "akka.tcp://lighthouse@127.0.0.1:4053", "akka.tcp://lighthouse@127.0.0.1:4044"
+		roles = ["pricing"]
+	}
+}

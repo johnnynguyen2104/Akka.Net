@@ -1,0 +1,16 @@
+﻿akka {
+	actor {
+		provider = cluster
+	}
+						
+	remote {
+		dot-netty.tcp {
+				hostname = localhost
+				port = 8081
+			}
+	}			
+
+	cluster {
+		seed-nodes = ["akka.tcp://gatewayapi@localhost:8081"] #manually populate other seed nodes here, i.e. "akka.tcp://lighthouse@127.0.0.1:4053", "akka.tcp://lighthouse@127.0.0.1:4044"
+	}
+}

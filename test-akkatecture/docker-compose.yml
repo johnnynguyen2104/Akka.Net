@@ -1,0 +1,30 @@
+version: '3.4'
+
+networks:
+  pricing:
+    driver: bridge
+
+services:
+  pricing.service:
+    image: ${DOCKER_REGISTRY-}pricingservice
+    build:
+      context: .
+      dockerfile: Pricing.Service/Dockerfile
+    environment:
+      CLUSTER_SEEDS: "akka.tcp://pricingsystem@pricing.service:8082"
+      CLUSTER_IP: pricing.service
+      CLUSTER_PORT: 8082
+
+
+  pricing.subscriber:
+    image: ${DOCKER_REGISTRY-}pricingsubscriber
+    build:
+      context: .
+      dockerfile: Pricing.Subscriber/Dockerfile
+    environment:
+      CLUSTER_SEEDS: "akka.tcp://pricingsystem@pricing.service:8082"
+      CLUSTER_IP: pricing.service
+      CLUSTER_PORT: 0
+    depends_on:
+      - pricing.service
+

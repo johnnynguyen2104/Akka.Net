@@ -1,0 +1,27 @@
+﻿akka {
+    actor{
+		provider = cluster
+		deployment {
+			 /product {
+			   router = round-robin-group # routing strategy
+				routees.paths = ["/user/product"]
+				nr-of-instances = 5 # max number of total routees
+			  cluster {
+				 enabled = on
+				 allow-local-routees = off
+				 use-role = product
+			  }
+			}
+		}
+	}
+    remote {
+        dot-netty.tcp {
+            port = 8082
+            hostname = localhost
+        }
+    }
+    cluster {
+        seed-nodes = ["akka.tcp://productservice@localhost:8082"]
+		roles = ["product"]
+    }
+}
